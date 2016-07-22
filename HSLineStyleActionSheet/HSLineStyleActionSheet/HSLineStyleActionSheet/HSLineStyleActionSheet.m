@@ -90,6 +90,8 @@
         
         CGFloat itemHeight = [self heightForRow:i] + [self heightForHeaderInRow:i] + insets.top + insets.bottom;
         UIView * itemView = [[UIView alloc] initWithFrame:CGRectMake(0, containerRelativeHeight, screenWidth, itemHeight)];
+        itemView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        
         relativeHeight += insets.top;
         
         NSString * headerTitle = [self titleForHeaderInRow:i];
@@ -108,6 +110,7 @@
         //scrollView.backgroundColor = [UIColor blueColor];
         scrollView.showsHorizontalScrollIndicator = NO;
         scrollView.showsVerticalScrollIndicator = NO;
+        scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [itemView addSubview:scrollView];
         
         {
@@ -173,6 +176,13 @@
     return _bottomContainerViewHeight;
 }
 
+
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    
+       _bottomContainerView.frame = CGRectMake(0, SCREEN_SIZE.height - _bottomContainerViewHeight, SCREEN_SIZE.width, _bottomContainerViewHeight);
+}
 
 
 #pragma mark - Event Action
@@ -254,6 +264,7 @@
     backgroundColor = _backgroundColor;
     self.bottomContainerView.backgroundColor = backgroundColor;
 }
+
 
 #pragma mark - delegate call wrapper
 
